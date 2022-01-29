@@ -1,6 +1,6 @@
+import datetime
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.expected_conditions import *
-from time import sleep
 
 
 class BasePage(object):
@@ -20,26 +20,24 @@ class BasePage(object):
         except Exception as e:
             print(e)
 
-    def wait_visibility_element(self, locator):
-        try:
-            self.wait.until(visibility_of_element_located((locator[0], locator[1])))
-            return True
-        except WebDriverException:
-            return False
+    def wait_visibility_element(self, locator, seconds=5):
+        start = datetime.datetime.now()
+        finish = self.wait.until(visibility_of_element_located((locator[0], locator[1])))
+        while not finish:
+            end = datetime.datetime.now()
+            if (end - start).total_seconds() >= seconds:
+                return False
+        return True
 
     def current_url(self, url):
         is_current_url = url == self.driver.current_url
-        sleep(0.2)
         return is_current_url
 
     def input_text(self, locator, text):
         element = self.driver.find_element(*locator)
         element.clear()
-        sleep(0.2)
         element.send_keys(text)
-        sleep(0.2)
 
     def click_element(self, locator):
         element = self.driver.find_element(*locator)
         element.click()
-        sleep(0.2)

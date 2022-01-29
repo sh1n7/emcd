@@ -5,7 +5,7 @@ from resources.locators import SiteLocators as sl
 
 
 @pytest.mark.emcd
-class TestMonitoring(BaseUITest):
+class TestFactorial(BaseUITest):
 
     # позитивные сценарии
     @pytest.mark.parametrize('send_text, verify_result', (
@@ -21,6 +21,7 @@ class TestMonitoring(BaseUITest):
         wd.open_page()
         wd.input_text(sl.FIELD_NUMBER, send_text)
         wd.click_element(sl.BUTTON_CALCULATE)
+        wd.wait_visibility_element(sl.BUTTON_CALCULATE)
         assert wd.is_verify_text(locator=sl.STRING_RESULT, text=f'The factorial of {send_text} is: {verify_result}')
 
     # негативные сценарии
@@ -35,10 +36,12 @@ class TestMonitoring(BaseUITest):
         wd.open_page()
         wd.input_text(sl.FIELD_NUMBER, send_text)
         wd.click_element(sl.BUTTON_CALCULATE)
+        wd.wait_visibility_element(sl.BUTTON_CALCULATE)
         assert wd.is_verify_text(locator=sl.STRING_RESULT, text=verify_result)
 
     # todo 500 - при вводе отрицательных чисел, необходимо обработать событие
-    @pytest.mark.skip('send_text, verify_result', (
+    @pytest.mark.skip(reason="500 - при вводе отрицательных чисел, необходимо обработать событие")
+    @pytest.mark.parametrize('send_text, verify_result', (
             (-1, 'inform message'),
     ))
     def test_fix(self, send_text, verify_result):
