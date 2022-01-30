@@ -21,7 +21,7 @@ class TestFactorial(BaseUITest):
         wd.open_page()
         wd.input_text(sl.FIELD_NUMBER, send_text)
         wd.click_element(sl.BUTTON_CALCULATE)
-        wd.wait_visibility_element(sl.BUTTON_CALCULATE)
+        wd.wait_visibility_element(sl.STRING_RESULT)
         assert wd.is_verify_text(locator=sl.STRING_RESULT, text=f'The factorial of {send_text} is: {verify_result}')
 
     # негативные сценарии
@@ -36,7 +36,7 @@ class TestFactorial(BaseUITest):
         wd.open_page()
         wd.input_text(sl.FIELD_NUMBER, send_text)
         wd.click_element(sl.BUTTON_CALCULATE)
-        wd.wait_visibility_element(sl.BUTTON_CALCULATE)
+        wd.wait_visibility_element(sl.STRING_RESULT)
         assert wd.is_verify_text(locator=sl.STRING_RESULT, text=verify_result)
 
     # todo 500 - при вводе отрицательных чисел, необходимо обработать событие
@@ -48,5 +48,5 @@ class TestFactorial(BaseUITest):
         wd = BasePage(self.driver)
         wd.open_page()
         wd.input_text(sl.FIELD_NUMBER, send_text)
-        wd.click_element(sl.BUTTON_CALCULATE)
+        wd.click_element(sl.STRING_RESULT)
         assert wd.is_verify_text(locator=sl.STRING_RESULT, text=verify_result)
